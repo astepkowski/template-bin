@@ -1,0 +1,31 @@
+[build]
+{% if mcu_family == "ATmega" -%}
+  {%- case mcu -%}
+    {%- when "ATmega8" -%}
+      target = "avr-specs/avr-atmega8.json"
+    {%- when "ATmega168" -%}
+      target = "avr-specs/avr-atmega168.json"
+    {%- when "ATmega1280" -%}
+      target = "avr-specs/avr-atmega1280.json"
+    {%- when "ATmega2560" -%}
+      target = "avr-specs/avr-atmega2560.json"
+    {%- when "ATmega328p" -%}
+      target = "avr-specs/avr-atmega328p.json"
+    {%- when "ATmega32u4" -%}
+      target = "avr-specs/avr-atmega32u4.json"
+    {%- when "ATmega48p" -%}
+      target = "avr-specs/avr-atmega48p.json"
+  {%- endcase -%}
+{%- else -%}
+  {%- if mcu_family == "ATtiny" -%}
+    {%- case mcu -%}
+      {%- when "ATtiny85" -%}
+        target = "avr-specs/avr-attiny85.json"
+      {%- when "ATtiny88" -%}
+        target = "avr-specs/avr-attiny88.json"
+    {%- endcase -%}
+  {%- endif -%}
+{%- endif %}
+
+[unstable]
+build-std = ["core"]
