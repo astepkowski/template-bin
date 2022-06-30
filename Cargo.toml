@@ -2,7 +2,65 @@
 name = "{{project-name}}"
 version = "0.1.0"
 authors = ["{{authors}}"]
-edition = "2018"
+edition = "2021"
+
+[[bin]]
+name = "{{project-name}}"
+test = false
+bench = false
 
 [dependencies]
-avr-std-stub = "1.0"
+panic-halt = "0.2.0"
+ufmt = "0.1.0"
+nb = "0.1.2"
+embedded-hal = "0.2.3"
+
+{% case mcu_family -%}
+  {%- when "ATmega" -%}
+    [dependencies.atmega-hal]
+  {%- when "ATtiny" -%}
+    [dependencies.attiny-hal]
+{%- endcase %}
+git = "https://github.com/astepkowski/avr-hal"
+branch = "astepkow_dev"
+features = ["rt", 
+{%- if mcu_family == "ATmega" -%} 
+  {%- case mcu -%}
+    {%- when "ATmega8" -%}
+      "atmega8"
+    {%- when "ATmega328p" -%}
+      "atmega328p"
+    {%- when "ATmega168" -%}
+      "atmega168"
+    {%- when "ATmega1280" -%}
+      "atmega1280"
+    {%- when "ATmega2560" -%}
+      "atmega2560"
+    {%- when "ATmega32u4" -%}
+      "atmega32u4"
+    {%- when "ATmega48p" -%}
+      "atmega48p"
+  {%- endcase -%}
+{%- else -%}
+  {%- if mcu_family == "ATtiny" -%}
+    {%- case mcu -%}
+      {%- when "ATtiny85" -%}
+        "attiny85"
+      {%- when "ATtiny88" -%}
+        "attiny88"
+    {%- endcase -%}
+  {%- endif -%}
+{%- endif -%}
+]
+
+[profile.dev]
+panic = "abort"
+lto = true
+opt-level = "s"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+debug = true
+lto = true
+opt-level = "s"

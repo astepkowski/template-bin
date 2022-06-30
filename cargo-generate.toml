@@ -1,0 +1,32 @@
+[placeholders.mcu_family]
+  type = "string"
+  prompt = "Which AVR family do you want to use?"
+  choices = [
+    "ATmega",
+    "ATtiny",
+  ]
+  default = "ATmega"
+[conditional.'mcu_family == "ATmega"'.placeholders.mcu]
+  type = "string"
+  prompt = "Which ATmega do you want to use?"
+  choices = [
+    "ATmega8",
+    "ATmega328p",
+    "ATmega1280",
+    "ATmega168",
+    "ATmega48p",
+    "ATmega2560",
+    "ATmega32u4",
+    "ATtiny85",
+    "ATtiny88",
+  ]
+  default = "ATmega8"
+
+[conditional.'mcu_family == "ATtiny"'.placeholders.mcu]
+  type = "string"
+  prompt = "Which ATtiny do you want to use?"
+  choices = [
+    "ATtiny85",
+    "ATtiny88",
+  ]
+  default = "ATtiny85"
