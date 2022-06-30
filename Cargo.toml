@@ -53,6 +53,9 @@ features = ["rt",
 {%- endif -%}
 ]
 
+[patch.crates-io]
+avr-device = {git = "https://github.com/astepkowski/avr-device.git", branch = "astepkow_dev"}
+
 [profile.dev]
 panic = "abort"
 lto = true
